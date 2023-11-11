@@ -1,19 +1,25 @@
-import os
 import numpy as np
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 import pyqtgraph as pg
 
-def load_signal(main_app):
-    filepath, _ = QFileDialog.getOpenFileName(main_app, "Open File", "", "Data Files (*.dat *.csv)")
-    if filepath:
-        _, extension = os.path.splitext(filepath)
-        if not os.path.exists(filepath):
-            QMessageBox.critical(main_app, "File Not Found", f"Could not find file at {filepath}.")
-            return
-        data = None
-        if extension == '.dat':
-            # Read the .dat file as 16-bit integers
-            data = np.fromfile(filepath, dtype=np.int16)
-        elif extension == '.csv':
-            data = np.loadtxt(filepath, delimiter=',', skiprows=1)
-        main_app.graphicsView.addItem(pg.PlotDataItem(data))
+import main as main_app
+# import matplotlib.pyplot as plt
+# from main import *
+
+
+class Functions:
+    def __init__(self):
+        self.current_time = None
+
+    def pause_audio(self, player):
+        if QMediaPlayer.StoppedState == 0:
+            QMediaPlayer.StoppedState = 1
+            player.play()
+        elif QMediaPlayer.StoppedState == 1:
+            QMediaPlayer.StoppedState = 0
+            player.pause()
+
+    def handle_media_position_change(self, position):
+        self.current_time = position
+
