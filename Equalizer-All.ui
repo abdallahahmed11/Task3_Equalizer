@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1458</width>
-    <height>896</height>
+    <height>837</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -240,6 +240,28 @@
              </layout>
             </item>
             <item>
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>376</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Apply</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="Line" name="line_5">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -298,7 +320,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider">
+               <widget class="QSlider" name="verticalSlider_1">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -410,7 +432,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_11">
+               <widget class="QSlider" name="verticalSlider_5">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -477,7 +499,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_5">
+               <widget class="QSlider" name="verticalSlider_6">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -505,7 +527,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_12">
+               <widget class="QSlider" name="verticalSlider_7">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -533,7 +555,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_13">
+               <widget class="QSlider" name="verticalSlider_8">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -561,7 +583,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_14">
+               <widget class="QSlider" name="verticalSlider_9">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -589,7 +611,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_15">
+               <widget class="QSlider" name="verticalSlider_10">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -748,7 +770,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
               <item>
-               <widget class="QGraphicsView" name="graphicsView"/>
+               <widget class="PlotWidget" name="graphicsView"/>
               </item>
               <item>
                <widget class="QGraphicsView" name="graphicsView_4"/>
@@ -769,7 +791,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,0">
               <item>
-               <widget class="QGraphicsView" name="graphicsView_2"/>
+               <widget class="PlotWidget" name="graphicsView_2"/>
               </item>
               <item>
                <widget class="QGraphicsView" name="graphicsView_5"/>
@@ -3011,11 +3033,18 @@
      <x>0</x>
      <y>0</y>
      <width>1458</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

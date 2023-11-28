@@ -101,7 +101,7 @@ def apply_equalizer(main_app, freq_ranges, magnitude, phases,freqs,time):
     # Loop over each slider
     for i in range(9):
         # Get the value of the current slider
-        slider_value = getattr(main_app, f'freqSlider_{i+1}').value()
+        slider_value = getattr(main_app, f'verticalSlider_{i+1}').value()
 
         # Find the indices of the FFT coefficients corresponding to this frequency range
         idx = np.where((freqs >= freq_ranges[i][0]) & (freqs < freq_ranges[i][1]))

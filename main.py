@@ -14,7 +14,7 @@ from Functions import apply_equalizer
 
 
 # import UI file
-FORM_CLASS, _ = loadUiType(path.join(path.dirname(__file__), "Equalizerr_2.ui"))
+FORM_CLASS, _ = loadUiType(path.join(path.dirname(__file__), "Equalizer-All.ui"))
 
 
 
@@ -27,8 +27,9 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.Handle_Buttons()
 
     def Handle_Buttons(self):
-        self.browseBtn.clicked.connect(lambda: load_signal(self))
-        self.applyBtn.clicked.connect(lambda: apply_equalizer(self, *get_freq_components(self, self.signal)))
+        pass
+        self.pushButton.clicked.connect(lambda: load_signal(self))
+        self.pushButton_2.clicked.connect(lambda: apply_equalizer(self, *get_freq_components(self, self.signal)))
 
 
 def main():
