@@ -8,9 +8,14 @@ from PyQt5.QtWidgets import QFileDialog, QMessageBox
 import pyqtgraph as pg
 # import the function from utils.py
 from Functions import load_signal
+from Functions import get_freq_components
+from Functions import apply_equalizer
+
+
 
 # import UI file
-FORM_CLASS, _ = loadUiType(path.join(path.dirname(__file__), "Equalizerr.ui"))
+FORM_CLASS, _ = loadUiType(path.join(path.dirname(__file__), "Equalizer-All.ui"))
+
 
 
 # initiate UI file
@@ -22,7 +27,9 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.Handle_Buttons()
 
     def Handle_Buttons(self):
-        self.browseBtn.clicked.connect(lambda: load_signal(self))
+        pass
+        self.pushButton.clicked.connect(lambda: load_signal(self))
+        self.pushButton_2.clicked.connect(lambda: apply_equalizer(self, *get_freq_components(self, self.signal)))
 
 
 def main():

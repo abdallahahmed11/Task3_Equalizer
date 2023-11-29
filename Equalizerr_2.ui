@@ -52,7 +52,7 @@ width:100px;
          </widget>
         </item>
         <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="applyBtn">
           <property name="minimumSize">
            <size>
             <width>108</width>
@@ -60,7 +60,7 @@ width:100px;
            </size>
           </property>
           <property name="text">
-           <string>PushButton</string>
+           <string>Apply</string>
           </property>
          </widget>
         </item>
@@ -490,7 +490,7 @@ width:100px;
            </spacer>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QSlider" name="freqSlider_8">
+           <widget class="QSlider" name="freqSlider_7">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -555,7 +555,7 @@ width:100px;
            </spacer>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QSlider" name="freqSlider_10">
+           <widget class="QSlider" name="freqSlider_8">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -685,7 +685,7 @@ width:100px;
            </spacer>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QSlider" name="freqSlider_11">
+           <widget class="QSlider" name="freqSlider_10">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -772,7 +772,7 @@ width:100px;
      <x>0</x>
      <y>0</y>
      <width>880</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

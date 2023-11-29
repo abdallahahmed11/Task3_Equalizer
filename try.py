@@ -1,54 +1,65 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider
 
-# Step 1: Generate a sample signal
-fs = 500  # Sample rate (Hz)
-t = np.arange(0, 1, 1/fs)  # Time array
-freq1, freq2 = 5, 25  # Frequencies of sinusoids (Hz)
-sig = np.sin(2*np.pi*freq1*t) + np.sin(2*np.pi*freq2*t)
+# Create a sample signal with three frequencies
+t = np.linspace(0, 1, 500, False)  # 1 second
+sig = 1*np.cos(2*np.pi*10*t) +2* np.sin(2*np.pi*30*t) +10* np.sin(2*np.pi*50*t)
 
-# Step 2: Take the FFT
+# Compute the Fast Fourier Transform (FFT)
 fft = np.fft.fft(sig)
 
-# Create a figure with a plot for the input signal and sliders
-fig, ax = plt.subplots()
-plt.subplots_adjust(bottom=0.3)
+# Compute the magnitudes of the FFT
+mag_before = np.abs(fft)
 
-# Step 3: Create Slider objects for each frequency band
-slider_ax1 = plt.axes([0.1, 0.15, 0.8, 0.05])
-slider_ax2 = plt.axes([0.1, 0.05, 0.8, 0.05])
-slider1 = Slider(slider_ax1, 'Low Freqs', 0.1, 2.0, valinit=1.0)
-slider2 = Slider(slider_ax2, 'High Freqs', 0.1, 2.0, valinit=1.0)
+# Compute the frequencies associated with the FFT
+freqs = np.fft.fftfreq(len(fft))
 
-# Function to be called whenever a slider value changes
-def update(val):
-    # Get the slider values
-    val1 = slider1.val
-    val2 = slider2.val
+# Define the gains for the four sliders
+# (In a real application, these would be controlled by the user)
+gains = [1,6,1]  # Change these values to see the effect
 
-    # Segment the FFT results into low and high frequencies
-    low_freqs = fft[:len(fft)//2]  # First half of the array
-    high_freqs = fft[len(fft)//2:]  # Second half of the array
+# Divide the positive frequency range into four parts
+freq_ranges = np.linspace(0, max(freqs), 4)
+for i in range(3):
+    # Find the indices of the FFT coefficients that correspond to this frequency range
+    idx = np.where((freqs >= freq_ranges[i]) & (freqs < freq_ranges[i+1]))
 
-    # Modify the FFT results using the slider values
-    modified_fft = np.concatenate([low_freqs*1, high_freqs*0.4])
+    # Apply the gain to these coefficients
+    fft[idx] *= gains[i]
 
-    # Step 4: Take the inverse FFT
-    reconstructed_sig = np.fft.ifft(modified_fft).real
+    # Also apply the gain to the corresponding negative frequencies
+    idx_neg = np.where((freqs >= -freq_ranges[i+1]) & (freqs < -freq_ranges[i]))
+    fft[idx_neg] *= gains[i]
 
-    # Update the plot
-    ax.clear()
-    ax.plot(t, sig, label='Original')
-    ax.plot(t, reconstructed_sig, label='Reconstructed')
-    ax.legend()
-    plt.show()
+# Now we can reconstruct the signal with the equalizer applied
+equalized_sig = np.fft.ifft(fft)
 
-# Call the update function whenever a slider value changes
-slider1.on_changed(update)
-slider2.on_changed(update)
+# Compute the magnitudes of the equalized FFT
+mag_after = np.abs(fft)
 
+# Let's plot the original and equalized signal in separate subplots
+fig, axs = plt.subplots(4, 1, figsize=(10, 15))
 
-update(3)
+# Original signal in time domain
+axs[0].plot(t, sig)
+axs[0].set(xlabel='Time [s]', ylabel='Amplitude')
+axs[0].set_title('Original Signal')
 
+# Original signal FFT magnitude
+axs[1].plot(freqs, mag_before)
+axs[1].set(xlabel='Frequency [Hz]', ylabel='Magnitude')
+axs[1].set_title('Original FFT Magnitude')
+
+# Equalized signal in time domain
+axs[2].plot(t, np.real(equalized_sig))
+axs[2].set(xlabel='Time [s]', ylabel='Amplitude')
+axs[2].set_title('Equalized Signal')
+
+# Equalized signal FFT magnitude
+axs[3].plot(freqs, mag_after)
+axs[3].set(xlabel='Frequency [Hz]', ylabel='Magnitude')
+axs[3].set_title('Equalized FFT Magnitude')
+
+plt.tight_layout()
 plt.show()
+
