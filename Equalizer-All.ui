@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -240,28 +240,6 @@
              </layout>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>376</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Apply</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="Line" name="line_5">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -269,6 +247,28 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>376</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Apply</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer">
@@ -833,7 +833,7 @@
              </widget>
             </item>
             <item alignment="Qt::AlignHCenter">
-             <widget class="QGraphicsView" name="graphicsView_3">
+             <widget class="PlotWidget" name="graphicsView_3">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -1084,6 +1084,13 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_7">
+            <property name="text">
+             <string>Apply</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer_20">
@@ -1585,7 +1592,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_92" stretch="1,0">
               <item>
-               <widget class="QGraphicsView" name="graphicsView_56"/>
+               <widget class="PlotWidget" name="graphicsView_56"/>
               </item>
               <item>
                <widget class="QGraphicsView" name="graphicsView_57"/>
@@ -1606,7 +1613,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_93" stretch="1,0">
               <item>
-               <widget class="QGraphicsView" name="graphicsView_58"/>
+               <widget class="PlotWidget" name="graphicsView_58"/>
               </item>
               <item>
                <widget class="QGraphicsView" name="graphicsView_59"/>
@@ -1625,7 +1632,7 @@
              </widget>
             </item>
             <item alignment="Qt::AlignHCenter">
-             <widget class="QGraphicsView" name="graphicsView_60">
+             <widget class="PlotWidget" name="graphicsView_60">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -1876,6 +1883,13 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_8">
+            <property name="text">
+             <string>Apply</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer_6">
@@ -2186,7 +2200,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="1,0">
               <item>
-               <widget class="QGraphicsView" name="graphicsView_21"/>
+               <widget class="PlotWidget" name="graphicsView_21"/>
               </item>
               <item>
                <widget class="QGraphicsView" name="graphicsView_22"/>
@@ -2207,7 +2221,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,0">
               <item>
-               <widget class="QGraphicsView" name="graphicsView_23"/>
+               <widget class="PlotWidget" name="graphicsView_23"/>
               </item>
               <item>
                <widget class="QGraphicsView" name="graphicsView_24"/>
@@ -2226,7 +2240,7 @@
              </widget>
             </item>
             <item alignment="Qt::AlignHCenter">
-             <widget class="QGraphicsView" name="graphicsView_25">
+             <widget class="PlotWidget" name="graphicsView_25">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -2477,6 +2491,13 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="text">
+             <string>Apply</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer_8">
@@ -2999,7 +3020,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="1,0">
               <item>
-               <widget class="QGraphicsView" name="graphicsView_28"/>
+               <widget class="PlotWidget" name="graphicsView_28"/>
               </item>
               <item>
                <widget class="QGraphicsView" name="graphicsView_29"/>
@@ -3018,7 +3039,7 @@
              </widget>
             </item>
             <item alignment="Qt::AlignHCenter">
-             <widget class="QGraphicsView" name="graphicsView_30">
+             <widget class="PlotWidget" name="graphicsView_30">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -3077,12 +3098,12 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>623</y>
+     <x>122</x>
+     <y>677</y>
     </hint>
     <hint type="destinationlabel">
-     <x>97</x>
-     <y>579</y>
+     <x>133</x>
+     <y>651</y>
     </hint>
    </hints>
   </connection>
@@ -3093,12 +3114,12 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>161</x>
-     <y>606</y>
+     <x>197</x>
+     <y>677</y>
     </hint>
     <hint type="destinationlabel">
-     <x>158</x>
-     <y>574</y>
+     <x>208</x>
+     <y>651</y>
     </hint>
    </hints>
   </connection>
@@ -3109,12 +3130,12 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>623</y>
+     <x>272</x>
+     <y>677</y>
     </hint>
     <hint type="destinationlabel">
-     <x>226</x>
-     <y>572</y>
+     <x>283</x>
+     <y>651</y>
     </hint>
    </hints>
   </connection>
@@ -3125,12 +3146,492 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>279</x>
-     <y>619</y>
+     <x>347</x>
+     <y>677</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>358</x>
+     <y>651</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>611</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>102</x>
+     <y>578</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_2</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>161</x>
+     <y>625</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>174</x>
+     <y>572</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_3</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>620</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>570</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_4</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>580</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_6</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>611</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>348</x>
+     <y>573</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_6</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_5</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>780</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>103</x>
+     <y>736</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_7</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_7</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>775</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>167</x>
+     <y>740</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_8</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_8</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>230</x>
+     <y>775</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>738</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_9</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_9</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>281</x>
+     <y>769</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>734</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_10</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_10</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>338</x>
+     <y>776</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>741</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_106</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_91</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>591</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>102</x>
+     <y>532</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_107</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_92</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>161</x>
+     <y>588</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>175</x>
+     <y>527</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_108</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_93</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>571</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>524</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_109</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_94</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>565</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>524</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_110</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_95</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>353</x>
+     <y>554</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>526</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_111</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_96</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>752</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>98</x>
+     <y>718</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_112</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_97</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>762</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>170</x>
+     <y>718</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_113</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_98</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>225</x>
+     <y>755</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>715</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_114</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_99</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>771</y>
     </hint>
     <hint type="destinationlabel">
      <x>287</x>
-     <y>569</y>
+     <y>725</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_115</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_100</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>357</x>
+     <y>761</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>357</x>
+     <y>713</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_46</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_31</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>104</x>
+     <y>539</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_47</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_32</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>575</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>527</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_48</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_33</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>233</x>
+     <y>570</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>535</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_49</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_34</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>281</x>
+     <y>519</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_50</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_35</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>346</x>
+     <y>581</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>348</x>
+     <y>528</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_51</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_36</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>774</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>114</x>
+     <y>717</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_52</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_37</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>777</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>172</x>
+     <y>725</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_53</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_38</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>751</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>721</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_54</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_39</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>765</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>295</x>
+     <y>714</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_55</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_40</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
+     <y>785</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>711</y>
     </hint>
    </hints>
   </connection>
