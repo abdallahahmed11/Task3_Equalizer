@@ -27,6 +27,8 @@ def load_signal(main_app):
 
         main_app.graphicsView.addItem(pg.PlotDataItem(data))
         plot_signal(main_app.graphicsView, data)
+        # plot_signal(main_app.graphicsView_26, data)
+
         get_freq_components(main_app, data)
 
 def plot_signal(graph,data):
