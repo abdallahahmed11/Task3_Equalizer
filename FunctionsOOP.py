@@ -5,6 +5,9 @@ import pyqtgraph as pg
 from scipy.fftpack import ifft
 from scipy.signal import windows
 import scipy.signal
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
+import matplotlib.pyplot as plt
+
 
 
 class SignalProcessor:
@@ -30,12 +33,10 @@ class SignalProcessor:
                 data = np.loadtxt(filepath, delimiter=',', skiprows=1)
 
             self.signal = data  # Assign the loaded data to self.signal
-            # self.main_app.graphicsView.addItem(pg.PlotDataItem(data))
             self.plot_signal(data ,graph)
             self.get_freq_components(data )
 
     def plot_signal(self, data , graph):
-        # self.main_app.graphicsView.addItem(pg.PlotDataItem(data))
         graph.addItem(pg.PlotDataItem(data))
 
     def rfft(self, signal, n_samples):
@@ -79,7 +80,12 @@ class SignalProcessor:
             window = scipy.signal.windows.gaussian(range, std=0.1)
 
         windowed_signal = window * slider_value
+
         return windowed_signal
+
+
+
+
 
     def get_freq_components(self, signal):
         # get time and Amplitude
@@ -87,10 +93,6 @@ class SignalProcessor:
         Amplitude = signal[:, 1]
         sampling_rate = 1.0 / (time[1] - time[0])
         n_samples = len(Amplitude)
-
-        # Apply a windowing function to the signal
-        # Amplitude = self.apply_windowing(Amplitude)
-        # Amplitude = self.apply_windowing(Amplitude ,windowType)
 
         # Compute the Fast Fourier Transform (FFT)
         self.fft = self.rfft(Amplitude, n_samples)
@@ -110,35 +112,7 @@ class SignalProcessor:
             freq_ranges.append(freq_range)
 
         return freq_ranges, magnitude, phases, freqs, time
-    # def get_freq_components(self, signal , windowType):
-    #     # get time and Amplitude
-    #     time = signal[:, 0]
-    #     Amplitude = signal[:, 1]
-    #     sampling_rate = 1.0 / (time[1] - time[0])
-    #     n_samples = len(Amplitude)
-    #
-    #     # Apply a windowing function to the signal
-    #     # Amplitude = self.apply_windowing(Amplitude)
-    #     # Amplitude = self.apply_windowing(Amplitude ,windowType)
-    #
-    #     # Compute the Fast Fourier Transform (FFT)
-    #     self.fft = self.rfft(Amplitude, n_samples)
-    #     # self.window_type = windowType
-    #
-    #     # Compute the frequencies associated with the FFT
-    #     freqs = self.get_freq(n_samples, 1.0 / sampling_rate)
-    #
-    #     # Find the corresponding magnitudes of the positive frequencies
-    #     magnitude, phases = self.get_mag_and_phase(self.fft)
-    #
-    #     # Create 10 equal frequency ranges
-    #     freq_boundaries = np.linspace(0, max(freqs), 10)
-    #     freq_ranges = []
-    #     for i in range(1, len(freq_boundaries)):
-    #         freq_range = (freq_boundaries[i - 1], freq_boundaries[i])
-    #         freq_ranges.append(freq_range)
-    #
-    #     return freq_ranges, magnitude, phases, freqs, time
+
 
     def apply_equalizer_uniform(self, freq_ranges, magnitude, phases, freqs, time):
         # Loop over each slider
@@ -168,14 +142,22 @@ class SignalProcessor:
     def on_window_type_changed(self, index):
         if index == 0:
             self.window_type = 'Rectangle'
+            self.main_app.graphicsView_5.clear()
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
         elif index == 1:
             self.window_type = 'Hamming'
+            self.main_app.graphicsView_5.clear()
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
             print(1)
         elif index == 2:
             self.window_type = 'Hanning'
+            self.main_app.graphicsView_5.clear()
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
             print(2)
         elif index == 3:
             self.window_type = 'Gaussian'
+            self.main_app.graphicsView_5.clear()
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
             print(3)
         else:
             self.window_type = 'Rectangle'
@@ -194,3 +176,63 @@ class SignalProcessor:
         self.main_app.graphicsView_3.plot(freqs, np.abs(equalized_fft) * 2, pen='r')  # Plot the magnitude spectrum
         self.main_app.graphicsView_3.setLabel('left', 'Magnitude')
         self.main_app.graphicsView_3.setLabel('bottom', 'Frequency')
+
+
+
+class SpectrogramPlotter:
+    def __init__(self,layout):
+        self.figure = None
+        self.axes = None
+        self.Spectrogram = None
+        self.layout = layout
+
+    def create_spectrogram_figure(self):
+        """Create a new spectrogram figure with black background."""
+        # If a canvas already exists, remove it from the layout
+        if self.Spectrogram is not None:
+            self.layout.removeWidget(self.Spectrogram)
+            self.Spectrogram.deleteLater()
+            self.Spectrogram = None
+
+        self.figure = plt.figure()
+        self.figure.patch.set_facecolor('white')
+        self.axes = self.figure.add_subplot()
+        self.Spectrogram = Canvas(self.figure)
+
+        # Add the Spectrogram canvas to the passed layout
+        self.layout.addWidget(self.Spectrogram)
+
+    def plot_spectro(self, signal, sampling_rate, cmap='jet', shading='auto'):
+        """
+        Plot a spectrogram of a given signal.
+
+        Parameters:
+        signal: The input signal.
+        sampling_rate: The sampling rate of the signal.
+        cmap: The color map to use for the plot.
+        shading: The shading option for the plot.
+        """
+        self.create_spectrogram_figure()
+
+        # Now that self.axes is not None, it's safe to clear it
+        self.axes.clear()
+
+        self.freq, self.time, self.Sxx = scipy.signal.spectrogram(signal, fs=sampling_rate)
+
+        # Check if there are any zero values in self.Sxx and handle them appropriately
+        if np.any(self.Sxx == 0):
+            self.Sxx[self.Sxx == 0] = 1e-10  # Replace zero values
+
+
+        # Plot the spectrogram
+        self.axes.pcolormesh(self.time, self.freq, 10 * np.log10(self.Sxx), cmap=cmap, shading=shading)
+
+        # Set x and y labels
+        self.axes.set_xlabel('Time [s]',fontdict={'fontsize': 6})
+        self.axes.set_ylabel('Frequency [Hz]',fontdict={'fontsize': 6})
+
+        # Set x and y limits
+        self.axes.set_xlim([0, self.time.max()])
+        self.axes.set_ylim([0, self.freq.max()])
+
+        self.Spectrogram.draw()
