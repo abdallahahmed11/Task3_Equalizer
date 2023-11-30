@@ -1,65 +1,85 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.uic import loadUiType
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
+from scipy import signal
+import pyqtgraph as pg
+import os
+import scipy.signal
 
-# Create a sample signal with three frequencies
-t = np.linspace(0, 1, 500, False)  # 1 second
-sig = 1*np.cos(2*np.pi*10*t) +2* np.sin(2*np.pi*30*t) +10* np.sin(2*np.pi*50*t)
+# import UI file
+FORM_CLASS, _ = loadUiType("Equalizerr_2.ui")  # replace "Equalizerr_2.ui" with the path to your UI file
 
-# Compute the Fast Fourier Transform (FFT)
-fft = np.fft.fft(sig)
+class MainApp(QMainWindow, FORM_CLASS):
+    def __init__(self, parent=None):
+        super(MainApp, self).__init__(parent)
+        self.setupUi(self)
+        self.Handle_Buttons()
 
-# Compute the magnitudes of the FFT
-mag_before = np.abs(fft)
 
-# Compute the frequencies associated with the FFT
-freqs = np.fft.fftfreq(len(fft))
+    def Handle_Buttons(self):
+        # self.pushButton.clicked.connect(self.load_and_plot)
+        self.pushButton_2.clicked.connect(self.load_signal_2)
 
-# Define the gains for the four sliders
-# (In a real application, these would be controlled by the user)
-gains = [1,6,1]  # Change these values to see the effect
+    # def load_signal(self):
+    #     # create a simple sine wave as an example signal
+    #     fs = 10e3
+    #     N = 1e5
+    #     amp = 2 * np.sqrt(2)
+    #     freq = 1234.0
+    #     noise_power = 0.01 * fs / 2
+    #     time = np.arange(N) / fs
+    #     self.SignalArray = amp*np.sin(2*np.pi*freq*time)
+    #
+    # def load_and_plot(self):
+    #     self.load_signal_2()
+    #     self.CreateWindowFigure()
+    #     self.apply_windowing(100)
 
-# Divide the positive frequency range into four parts
-freq_ranges = np.linspace(0, max(freqs), 4)
-for i in range(3):
-    # Find the indices of the FFT coefficients that correspond to this frequency range
-    idx = np.where((freqs >= freq_ranges[i]) & (freqs < freq_ranges[i+1]))
+    def load_signal_2(self):
+        filepath, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Data Files (*.dat *.csv)")
+        if filepath:
+            _, extension = os.path.splitext(filepath)
+            if not os.path.exists(filepath):
+                QMessageBox.critical(self, "File Not Found", f"Could not find file at {filepath}.")
+                return
+            data = None
+            if extension == '.dat':
+                # Read the .dat file as 16-bit integers
+                data = np.fromfile(filepath, dtype=np.int16)
+            elif extension == '.csv':
+                data = np.loadtxt(filepath, delimiter=',', skiprows=1)
 
-    # Apply the gain to these coefficients
-    fft[idx] *= gains[i]
+            self.signal_2 = data  # Assign the loaded data to main_app.signal
+            window=signal.windows.hann(len(self.signal_2))
+            window_2=window*0
 
-    # Also apply the gain to the corresponding negative frequencies
-    idx_neg = np.where((freqs >= -freq_ranges[i+1]) & (freqs < -freq_ranges[i]))
-    fft[idx_neg] *= gains[i]
 
-# Now we can reconstruct the signal with the equalizer applied
-equalized_sig = np.fft.ifft(fft)
+            self.graphicsView.addItem(pg.PlotDataItem(window_2))
 
-# Compute the magnitudes of the equalized FFT
-mag_after = np.abs(fft)
 
-# Let's plot the original and equalized signal in separate subplots
-fig, axs = plt.subplots(4, 1, figsize=(10, 15))
 
-# Original signal in time domain
-axs[0].plot(t, sig)
-axs[0].set(xlabel='Time [s]', ylabel='Amplitude')
-axs[0].set_title('Original Signal')
+    # def apply_windowing(self, window_size):
+    #     window = scipy.signal.windows.boxcar(window_size)
+    #     self.axes_window.plot(window)
+    #     self.Window.draw()
+    #
+    # def CreateWindowFigure(self):
+    #     self.figure = plt.figure()
+    #     self.figure.patch.set_facecolor('black')
+    #     self.axes_window = self.figure.add_subplot()
+    #     self.Window = Canvas(self.figure)
+    #     self.verticalLayout.addWidget(self.Window)
 
-# Original signal FFT magnitude
-axs[1].plot(freqs, mag_before)
-axs[1].set(xlabel='Frequency [Hz]', ylabel='Magnitude')
-axs[1].set_title('Original FFT Magnitude')
 
-# Equalized signal in time domain
-axs[2].plot(t, np.real(equalized_sig))
-axs[2].set(xlabel='Time [s]', ylabel='Amplitude')
-axs[2].set_title('Equalized Signal')
+def main():
+    app = QApplication(sys.argv)
+    window = MainApp()
+    window.show()
+    sys.exit(app.exec_())
 
-# Equalized signal FFT magnitude
-axs[3].plot(freqs, mag_after)
-axs[3].set(xlabel='Frequency [Hz]', ylabel='Magnitude')
-axs[3].set_title('Equalized FFT Magnitude')
 
-plt.tight_layout()
-plt.show()
-
+if __name__ == '__main__':
+    main()

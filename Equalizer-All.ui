@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1498</width>
+    <width>1520</width>
     <height>985</height>
    </rect>
   </property>
@@ -107,7 +107,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <property name="bottomMargin">
-             <number>30</number>
+             <number>10</number>
             </property>
             <item>
              <widget class="QLabel" name="label_2">
@@ -117,7 +117,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox">
+             <widget class="QComboBox" name="comboBox_mode1">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -165,9 +165,28 @@
            </layout>
           </item>
           <item>
+           <widget class="PlotWidget" name="graphicsView_5">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>232</width>
+              <height>80</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout">
             <property name="spacing">
              <number>15</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
             </property>
             <property name="bottomMargin">
              <number>5</number>
@@ -211,8 +230,11 @@
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <property name="spacing">
+               <number>5</number>
+              </property>
               <property name="bottomMargin">
-               <number>45</number>
+               <number>20</number>
               </property>
               <item>
                <widget class="QLineEdit" name="lineEdit_2"/>
@@ -262,7 +284,7 @@
             <property name="minimumSize">
              <size>
               <width>376</width>
-              <height>23</height>
+              <height>25</height>
              </size>
             </property>
             <property name="text">
@@ -794,8 +816,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>19</y>
+                   <width>401</width>
+                   <height>231</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout">
+                  <item row="1" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_16"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -825,8 +862,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>19</y>
+                   <width>401</width>
+                   <height>241</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_2">
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_17"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -954,7 +1006,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_95">
             <property name="bottomMargin">
-             <number>30</number>
+             <number>10</number>
             </property>
             <item>
              <widget class="QLabel" name="label_190">
@@ -964,7 +1016,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_13">
+             <widget class="QComboBox" name="comboBox_mode2">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1012,9 +1064,15 @@
            </layout>
           </item>
           <item>
+           <widget class="PlotWidget" name="graphicsView_4"/>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_150">
             <property name="spacing">
              <number>15</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
             </property>
             <property name="bottomMargin">
              <number>5</number>
@@ -1058,8 +1116,11 @@
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_97">
+              <property name="spacing">
+               <number>5</number>
+              </property>
               <property name="bottomMargin">
-               <number>45</number>
+               <number>20</number>
               </property>
               <item>
                <widget class="QLineEdit" name="lineEdit_24"/>
@@ -1773,7 +1834,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_19">
             <property name="bottomMargin">
-             <number>30</number>
+             <number>10</number>
             </property>
             <item>
              <widget class="QLabel" name="label_57">
@@ -1783,7 +1844,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_6">
+             <widget class="QComboBox" name="comboBox_mode3">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1831,12 +1892,18 @@
            </layout>
           </item>
           <item>
+           <widget class="PlotWidget" name="graphicsView_6"/>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_35">
             <property name="spacing">
-             <number>15</number>
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
             </property>
             <property name="bottomMargin">
-             <number>20</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QLabel" name="label_58">
@@ -1877,8 +1944,11 @@
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_21">
+              <property name="spacing">
+               <number>5</number>
+              </property>
               <property name="bottomMargin">
-               <number>80</number>
+               <number>20</number>
               </property>
               <item>
                <widget class="QLineEdit" name="lineEdit_10"/>
@@ -1932,7 +2002,7 @@
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>100</height>
+              <height>70</height>
              </size>
             </property>
            </spacer>
@@ -2401,7 +2471,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_27">
             <property name="bottomMargin">
-             <number>30</number>
+             <number>10</number>
             </property>
             <item>
              <widget class="QLabel" name="label_76">
@@ -2411,7 +2481,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_7">
+             <widget class="QComboBox" name="comboBox_mode4">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -2459,9 +2529,15 @@
            </layout>
           </item>
           <item>
+           <widget class="PlotWidget" name="graphicsView_7"/>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_50">
             <property name="spacing">
              <number>15</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
             </property>
             <property name="bottomMargin">
              <number>5</number>
@@ -2505,8 +2581,11 @@
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_38">
+              <property name="spacing">
+               <number>5</number>
+              </property>
               <property name="bottomMargin">
-               <number>45</number>
+               <number>20</number>
               </property>
               <item>
                <widget class="QLineEdit" name="lineEdit_12"/>
@@ -3146,7 +3225,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1498</width>
+     <width>1520</width>
      <height>31</height>
     </rect>
    </property>
@@ -3157,6 +3236,7 @@
    <class>PlotWidget</class>
    <extends>QGraphicsView</extends>
    <header location="global">pyqtgraph</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

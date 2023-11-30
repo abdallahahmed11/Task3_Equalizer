@@ -9,6 +9,7 @@ import scipy.signal
 
 
 
+
 def load_signal(main_app):
     filepath, _ = QFileDialog.getOpenFileName(main_app, "Open File", "", "Data Files (*.dat *.csv)")
     if filepath:
@@ -24,8 +25,6 @@ def load_signal(main_app):
             data = np.loadtxt(filepath, delimiter=',', skiprows=1)
 
         main_app.signal = data  # Assign the loaded data to main_app.signal
-
-        main_app.graphicsView.addItem(pg.PlotDataItem(data))
         plot_signal(main_app.graphicsView, data)
         # plot_signal(main_app.graphicsView_26, data)
 
@@ -45,8 +44,8 @@ def get_mag_and_phase(fft_result):
     phases = np.angle(fft_result)
     return magnitudes,phases
 
-def change_magintude(magnitude,slide_factor):
-    new_magnitude=magnitude*slide_factor
+def change_magintude(magnitude,window):
+    new_magnitude=magnitude*window
     return new_magnitude
 
 def create_equalized_signal(magnitudes,phases):
@@ -62,10 +61,15 @@ def get_freq(n_samples,sampling_rate):
     frequencies = np.fft.rfftfreq(n_samples,sampling_rate)
     return frequencies
 
-def apply_windowing(signal):
-    window = scipy.signal.windows.boxcar(len(signal))
-    windowed_signal = signal * window
-    return windowed_signal
+def apply_windowing(range,slider_value,):
+    window = windows.window_type(range)
+    return window * slider_value
+
+
+
+
+
+
 
 
 def get_freq_components(main_app, signal):
@@ -75,9 +79,6 @@ def get_freq_components(main_app, signal):
     sampling_rate = 1.0 / (time[1] - time[0])
     n_samples=len(Amplitude)
 
-    # Apply a windowing function to the signal
-    Amplitude=apply_windowing(Amplitude)
-
     #Compute the Fast Fourier Transform (FFT)
     main_app.fft=rfft(Amplitude,n_samples)
 
@@ -86,6 +87,8 @@ def get_freq_components(main_app, signal):
 
     # Find the corresponding magnitudes of the positive frequencies
     magnitude,phases=get_mag_and_phase(main_app.fft)
+
+    #plotspectrogram(magnitude,sampling_rate,main_app.graphicsView_4)
 
     # Create 10 equal frequency ranges
     freq_boundaries = np.linspace(0, max(freqs), 10)
@@ -108,10 +111,15 @@ def apply_equalizer(main_app, freq_ranges, magnitude, phases,freqs,time):
         # Find the indices of the FFT coefficients corresponding to this frequency range
         idx = np.where((freqs >= freq_ranges[i][0]) & (freqs < freq_ranges[i][1]))
 
-        # Apply the gain to these coefficients
-        new_magnitude=change_magintude(magnitude[idx],slider_value)
+        # Apply Windowing
+        window=apply_windowing(len(idx[0]),slider_value)
 
-        #update the magnitude
+        print(window)
+
+        # Apply the gain to these coefficients
+        new_magnitude=change_magintude(magnitude[idx],window)
+
+        #update the magnitude with windowing
         magnitude[idx]=new_magnitude
 
     # Create a new fft result with modified magnitudes and original phases
