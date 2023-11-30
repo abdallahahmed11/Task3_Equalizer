@@ -114,7 +114,7 @@ class SignalProcessor:
         return freq_ranges, magnitude, phases, freqs, time
 
 
-    def apply_equalizer_uniform(self, freq_ranges, magnitude, phases, freqs, time):
+    def apply_equalizer_uniform(self, freq_ranges, magnitude, phases, freqs, time , freqGraph, outputTimeGraph):
         # Loop over each slider
         for i in range(9):
             # Get the value of the current slider
@@ -135,9 +135,11 @@ class SignalProcessor:
         # Create a new fft result with modified magnitudes and original phases
         self.new_fft_result = self.create_equalized_signal(magnitude, phases)
         equalized_sig = self.inverse(self.new_fft_result, len(self.fft))
-        self.main_app.graphicsView_2.clear()
-        self.main_app.graphicsView_2.addItem(pg.PlotDataItem(time, equalized_sig))
-        self.plot_equalized_fft(equalized_sig, 1.0 / (time[1] - time[0]))
+        # self.main_app.graphicsView_2.clear()
+        # self.main_app.graphicsView_2.addItem(pg.PlotDataItem(time, equalized_sig))
+        outputTimeGraph.clear()
+        outputTimeGraph.addItem(pg.PlotDataItem(time, equalized_sig))
+        self.plot_equalized_fft(equalized_sig, 1.0 / (time[1] - time[0]) ,freqGraph)
 
     def on_window_type_changed(self, index):
         if index == 0:
@@ -162,7 +164,7 @@ class SignalProcessor:
         else:
             self.window_type = 'Rectangle'
 
-    def plot_equalized_fft(self, equalized_sig, sampling_rate):
+    def plot_equalized_fft(self, equalized_sig, sampling_rate , freqGraph):
         n_samples = len(equalized_sig)
 
         # Compute the FFT of the equalized signal
@@ -172,10 +174,82 @@ class SignalProcessor:
         freqs = self.get_freq(n_samples, sampling_rate)
 
         # Plot the magnitude spectrum on graphicsView_3
+        # self.main_app.graphicsView_3.clear()
+        # self.main_app.graphicsView_3.plot(freqs, np.abs(equalized_fft) * 2, pen='r')  # Plot the magnitude spectrum
+        # self.main_app.graphicsView_3.setLabel('left', 'Magnitude')
+        # self.main_app.graphicsView_3.setLabel('bottom', 'Frequency')
+        freqGraph.clear()
+        freqGraph.plot(freqs, np.abs(equalized_fft) * 2, pen='r')  # Plot the magnitude spectrum
+        freqGraph.setLabel('left', 'Magnitude')
+        freqGraph.setLabel('bottom', 'Frequency')
+
+    def clear_modes234(self):
+        # mode 2 graphs
+        self.main_app.graphicsView_56.clear()
+        self.main_app.graphicsView_58.clear()
+        self.main_app.graphicsView_60.clear()
+        self.main_app.graphicsView_4.clear()
+        # mode 3 graphs
+        self.main_app.graphicsView_21.clear()
+        self.main_app.graphicsView_23.clear()
+        self.main_app.graphicsView_6.clear()
+        # mode 4 graphs
+        self.main_app.graphicsView_26.clear()
+        self.main_app.graphicsView_28.clear()
+        self.main_app.graphicsView_30.clear()
+        self.main_app.graphicsView_7.clear()
+
+    def clear_modes134(self):
+        # mode 1 graphs
+        self.main_app.graphicsView.clear()
+        self.main_app.graphicsView_2.clear()
         self.main_app.graphicsView_3.clear()
-        self.main_app.graphicsView_3.plot(freqs, np.abs(equalized_fft) * 2, pen='r')  # Plot the magnitude spectrum
-        self.main_app.graphicsView_3.setLabel('left', 'Magnitude')
-        self.main_app.graphicsView_3.setLabel('bottom', 'Frequency')
+        self.main_app.graphicsView_5.clear()
+        # mode 3 graphs
+        self.main_app.graphicsView_21.clear()
+        self.main_app.graphicsView_23.clear()
+        self.main_app.graphicsView_25.clear()
+        self.main_app.graphicsView_6.clear()
+        # mode 4 graphs
+        self.main_app.graphicsView_26.clear()
+        self.main_app.graphicsView_28.clear()
+        self.main_app.graphicsView_30.clear()
+        self.main_app.graphicsView_7.clear()
+
+    def clear_modes124(self):
+        # mode 1 graphs
+        self.main_app.graphicsView.clear()
+        self.main_app.graphicsView_2.clear()
+        self.main_app.graphicsView_3.clear()
+        self.main_app.graphicsView_5.clear()
+        # mode 2 graphs
+        self.main_app.graphicsView_56.clear()
+        self.main_app.graphicsView_58.clear()
+        self.main_app.graphicsView_60.clear()
+        self.main_app.graphicsView_4.clear()
+        # mode 4 graphs
+        self.main_app.graphicsView_26.clear()
+        self.main_app.graphicsView_28.clear()
+        self.main_app.graphicsView_30.clear()
+        self.main_app.graphicsView_7.clear()
+
+    def clear_modes123(self):
+        # mode 1 graphs
+        self.main_app.graphicsView.clear()
+        self.main_app.graphicsView_2.clear()
+        self.main_app.graphicsView_3.clear()
+        self.main_app.graphicsView_5.clear()
+        # mode 2 graphs
+        self.main_app.graphicsView_56.clear()
+        self.main_app.graphicsView_58.clear()
+        self.main_app.graphicsView_60.clear()
+        self.main_app.graphicsView_4.clear()
+        # mode 3 graphs
+        self.main_app.graphicsView_21.clear()
+        self.main_app.graphicsView_23.clear()
+        self.main_app.graphicsView_25.clear()
+        self.main_app.graphicsView_6.clear()
+
 
 
 
