@@ -36,7 +36,7 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.verticalSlider_1.setRange(0, 10)
         self.verticalSlider_2.setRange(0, 10)
         self.verticalSlider_3.setRange(0, 10)
-        self.verticalSlider_3.setRange(0, 10)
+        self.verticalSlider_4.setRange(0, 10)
         self.verticalSlider_5.setRange(0, 10)
         self.verticalSlider_6.setRange(0, 10)
         self.verticalSlider_7.setRange(0, 10)
@@ -60,14 +60,8 @@ class MainApp(QMainWindow, FORM_CLASS):
 
 
     def Handle_Buttons(self):
-        # self.pushButton.clicked.connect(self.signal_processor.load_signal)
-        # self.pushButton_57.clicked.connect(self.signal_processor.load_signal)
-        # self.pushButton_22.clicked.connect(self.signal_processor.load_signal)
-        # self.pushButton_27.clicked.connect(self.signal_processor.load_signal)
-        #
-        # self.pushButton_2.clicked.connect(self.apply_equalizer_handler)
         self.tabWidget.currentChanged.connect(self.tab_changed_handler)
-        self.comboBox_mode1.currentIndexChanged.connect(self.signal_processor.on_window_type_changed)
+
 
     def apply_equalizer_handler(self, freqGraph , outputTimeGraph):
         freq_ranges, magnitude, phases, freqs, time  = self.signal_processor.get_freq_components(self.signal_processor.signal )
@@ -82,51 +76,73 @@ class MainApp(QMainWindow, FORM_CLASS):
             print("First tab clicked")
             # self.pushButton.clicked.connect(self.signal_processor.load_signal)
             self.pushButton.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView))
+            self.pushButton.clicked.connect(self.signal_processor.default_graph_drawing)
             # self.pushButton_2.clicked.connect(self.apply_equalizer_handler)
             self.pushButton_2.clicked.connect(lambda:self.apply_equalizer_handler(freqGraph=self.graphicsView_3 , outputTimeGraph=self.graphicsView_2))
             self.signal_processor.clear_modes234()
+            self.comboBox_mode1.currentIndexChanged.connect(
+                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode1))
+
+            self.graphicsView.setXLink(self.graphicsView_2)
+            self.graphicsView.setYLink(self.graphicsView_2)
+            self.pushButton_4.clicked.connect(lambda :self.signal_processor.zoomIn(graph=self.graphicsView))
+            self.pushButton_5.clicked.connect(lambda :self.signal_processor.zoomOut(graph=self.graphicsView))
+            self.pushButton_6.clicked.connect(lambda :self.signal_processor.fitScreen(graph=self.graphicsView))
+
+
 
 
         elif index == 1:
             print("Second tab clicked")
             # self.pushButton_57.clicked.connect(self.signal_processor.load_signal)
             self.pushButton_57.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView_56))
+            self.pushButton_57.clicked.connect(self.signal_processor.default_graph_drawing)
+
             self.pushButton_7.clicked.connect(lambda:self.apply_equalizer_handler(freqGraph=self.graphicsView_60, outputTimeGraph= self.graphicsView_58))
             self.signal_processor.clear_modes134()
+            self.comboBox_mode2.currentIndexChanged.connect(
+                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode2))
+            self.graphicsView_56.setXLink(self.graphicsView_58)
+            self.graphicsView_56.setYLink(self.graphicsView_58)
+            self.pushButton_54.clicked.connect(lambda: self.signal_processor.zoomIn(graph=self.graphicsView_56))
+            self.pushButton_55.clicked.connect(lambda: self.signal_processor.zoomOut(graph=self.graphicsView_56))
+            self.pushButton_56.clicked.connect(lambda: self.signal_processor.fitScreen(graph=self.graphicsView_56))
+
 
 
         elif index == 2:
             print("Third tab clicked")
             # self.pushButton_22.clicked.connect(self.signal_processor.load_signal)
             self.pushButton_22.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView_21))
+            self.pushButton_22.clicked.connect(self.signal_processor.default_graph_drawing)
+
             self.pushButton_8.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_25 ,outputTimeGraph=self.graphicsView_23))
             self.signal_processor.clear_modes124()
+            self.comboBox_mode3.currentIndexChanged.connect(
+                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode3))
+            self.graphicsView_21.setXLink(self.graphicsView_23)
+            self.graphicsView_21.setYLink(self.graphicsView_23)
+            self.pushButton_19.clicked.connect(lambda: self.signal_processor.zoomIn(graph=self.graphicsView_21))
+            self.pushButton_20.clicked.connect(lambda: self.signal_processor.zoomOut(graph=self.graphicsView_21))
+            self.pushButton_21.clicked.connect(lambda: self.signal_processor.fitScreen(graph=self.graphicsView_21))
+
 
         elif index == 3:
             print("Fourth tab clicked")
             # self.pushButton_27.clicked.connect(self.signal_processor.load_signal)
             self.pushButton_27.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView_26))
+            self.pushButton_27.clicked.connect(self.signal_processor.default_graph_drawing)
+
             self.pushButton_9.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_30 ,outputTimeGraph= self.graphicsView_28))
             self.signal_processor.clear_modes123()
+            self.comboBox_mode4.currentIndexChanged.connect(
+                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode4))
+            self.graphicsView_26.setXLink(self.graphicsView_28)
+            self.graphicsView_26.setYLink(self.graphicsView_28)
+            self.pushButton_24.clicked.connect(lambda: self.signal_processor.zoomIn(graph=self.graphicsView_26))
+            self.pushButton_25.clicked.connect(lambda: self.signal_processor.zoomOut(graph=self.graphicsView_26))
+            self.pushButton_26.clicked.connect(lambda: self.signal_processor.fitScreen(graph=self.graphicsView_26))
 
-    # def on_window_type_changed(self, index):
-    #     if index == 0:
-    #         self.window_type = 'Rectangle'
-    #     elif index == 1:
-    #         self.window_type = 'Hamming'
-    #         print(1)
-    #     elif index == 2:
-    #         self.window_type = 'Hanning'
-    #     elif index == 3:
-    #         self.window_type = 'Gaussian'
-    #     else:
-    #         self.window_type = 'Rectangle'
-    #
-    #         # Default to Rectangle if the index is out of range
-    #
-    #     # Now you can use the selected window type in your application
-    #     self.signal_processor.get_freq_components(self.signal_processor.signal, self.window_type)
-    #     # self.signal_processor.apply_equalizer_uniform(self.signal_processor.signal, window_type)
 
 
 
