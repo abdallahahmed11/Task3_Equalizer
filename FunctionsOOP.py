@@ -141,28 +141,28 @@ class SignalProcessor:
         outputTimeGraph.addItem(pg.PlotDataItem(time, equalized_sig))
         self.plot_equalized_fft(equalized_sig, 1.0 / (time[1] - time[0]) ,freqGraph)
 
-    def on_window_type_changed(self, index):
-        if index == 0:
-            self.window_type = 'Rectangle'
-            self.main_app.graphicsView_5.clear()
-            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-        elif index == 1:
-            self.window_type = 'Hamming'
-            self.main_app.graphicsView_5.clear()
-            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-            print(1)
-        elif index == 2:
-            self.window_type = 'Hanning'
-            self.main_app.graphicsView_5.clear()
-            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-            print(2)
-        elif index == 3:
-            self.window_type = 'Gaussian'
-            self.main_app.graphicsView_5.clear()
-            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-            print(3)
-        else:
-            self.window_type = 'Rectangle'
+    # def on_window_type_changed(self, index):
+    #     if index == 0:
+    #         self.window_type = 'Rectangle'
+    #         self.main_app.graphicsView_5.clear()
+    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+    #     elif index == 1:
+    #         self.window_type = 'Hamming'
+    #         self.main_app.graphicsView_5.clear()
+    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+    #         print(1)
+    #     elif index == 2:
+    #         self.window_type = 'Hanning'
+    #         self.main_app.graphicsView_5.clear()
+    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+    #         print(2)
+    #     elif index == 3:
+    #         self.window_type = 'Gaussian'
+    #         self.main_app.graphicsView_5.clear()
+    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+    #         print(3)
+    #     else:
+    #         self.window_type = 'Rectangle'
 
     def plot_equalized_fft(self, equalized_sig, sampling_rate , freqGraph):
         n_samples = len(equalized_sig)
@@ -249,6 +249,78 @@ class SignalProcessor:
         self.main_app.graphicsView_23.clear()
         self.main_app.graphicsView_25.clear()
         self.main_app.graphicsView_6.clear()
+
+
+    def on_window_type_changed2(self, index , comboBox):
+        # Determine the active tab
+        active_tab_index = self.main_app.tabWidget.currentIndex()
+
+        # Get the selected window type from the ComboBox
+        # window_type_index = self.main_app.comboBox_mode1.currentIndex()
+        window_type_index = comboBox.currentIndex()
+        window_types = ['Rectangle', 'Hamming', 'Hanning', 'Gaussian']
+
+        if window_type_index < len(window_types):
+            selected_window_type = window_types[window_type_index]
+        else:
+            selected_window_type = 'Rectangle'  # Default to Rectangle if ComboBox index is out of range
+
+        if active_tab_index == 0:
+            # First tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_5.clear()
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+        elif active_tab_index == 1:
+            # Second tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_4.clear()
+            self.main_app.graphicsView_4.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+        elif active_tab_index == 2:
+            # Third tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_6.clear()
+            self.main_app.graphicsView_6.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+        elif active_tab_index == 3:
+            # Fourth tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_7.clear()
+            self.main_app.graphicsView_7.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
+        else:
+            self.window_type = selected_window_type
+
+
+    def default_graph_drawing(self):
+        active_tab_index = self.main_app.tabWidget.currentIndex()
+        if active_tab_index == 0:
+            # First tab is active
+            self.main_app.graphicsView_5.clear()
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1,'Rectangle')))
+        elif active_tab_index == 1:
+            # Second tab is active
+            self.main_app.graphicsView_4.clear()
+            self.main_app.graphicsView_4.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+        elif active_tab_index == 2:
+            # Third tab is active
+            self.main_app.graphicsView_6.clear()
+            self.main_app.graphicsView_6.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+        elif active_tab_index == 3:
+            # Fourth tab is active
+            self.main_app.graphicsView_7.clear()
+            self.main_app.graphicsView_7.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+
+    def zoomOut(self, graph):
+        # You can adjust the zoom factor as needed
+        zoom_factor = 1.2
+        graph.getViewBox().scaleBy((zoom_factor, zoom_factor))
+
+    def zoomIn(self, graph):
+        # You can adjust the zoom factor as needed
+        zoom_factor = 0.8
+        graph.getViewBox().scaleBy((zoom_factor, zoom_factor))
+
+    def fitScreen(self, graph):
+        graph.getViewBox().autoRange()
+
 
 
 
