@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -1201,34 +1201,6 @@
              </spacer>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_151">
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLCDNumber" name="lcdNumber_91">
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_106">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="label_194">
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
              <layout class="QVBoxLayout" name="verticalLayout_152">
               <item alignment="Qt::AlignHCenter">
                <widget class="QLCDNumber" name="lcdNumber_92">
@@ -1241,7 +1213,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_107">
+               <widget class="QSlider" name="instrumentSlider_1">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -1269,7 +1241,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_108">
+               <widget class="QSlider" name="instrumentSlider_2">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -1297,7 +1269,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_109">
+               <widget class="QSlider" name="instrumentSlider_3">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -1325,7 +1297,7 @@
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_110">
+               <widget class="QSlider" name="instrumentSlider_4">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -1365,162 +1337,6 @@
             </property>
             <item>
              <spacer name="horizontalSpacer_109">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_156">
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLCDNumber" name="lcdNumber_96">
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_111">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="label_199">
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_157">
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLCDNumber" name="lcdNumber_97">
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_112">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="label_200">
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_158">
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLCDNumber" name="lcdNumber_98">
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_113">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="label_201">
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_159">
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLCDNumber" name="lcdNumber_99">
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_114">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="label_202">
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_160">
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLCDNumber" name="lcdNumber_100">
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QSlider" name="verticalSlider_115">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="label_203">
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_110">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1674,8 +1490,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget_7">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>19</y>
+                   <width>401</width>
+                   <height>231</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_7">
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_22"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -1705,8 +1536,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget_8">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>19</y>
+                   <width>401</width>
+                   <height>231</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_8">
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_23"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -2311,8 +2157,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget_5">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>19</y>
+                   <width>401</width>
+                   <height>231</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_5">
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_20"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -2342,8 +2203,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget_6">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>19</y>
+                   <width>401</width>
+                   <height>231</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_6">
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_21"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -3139,8 +3015,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>9</y>
+                   <width>401</width>
+                   <height>251</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_3">
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_18"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -3170,8 +3061,23 @@
                  </size>
                 </property>
                 <property name="title">
-                 <string>GroupBox</string>
+                 <string>Spectrogram</string>
                 </property>
+                <widget class="QWidget" name="gridLayoutWidget_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>20</y>
+                   <width>401</width>
+                   <height>231</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_4">
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_19"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -3226,7 +3132,7 @@
      <x>0</x>
      <y>0</y>
      <width>1520</width>
-     <height>31</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -3466,23 +3372,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_106</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_91</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>101</x>
-     <y>591</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>102</x>
-     <y>532</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>verticalSlider_107</sender>
+   <sender>instrumentSlider_1</sender>
    <signal>valueChanged(int)</signal>
    <receiver>lcdNumber_92</receiver>
    <slot>display(int)</slot>
@@ -3498,7 +3388,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_108</sender>
+   <sender>instrumentSlider_2</sender>
    <signal>valueChanged(int)</signal>
    <receiver>lcdNumber_93</receiver>
    <slot>display(int)</slot>
@@ -3514,7 +3404,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_109</sender>
+   <sender>instrumentSlider_3</sender>
    <signal>valueChanged(int)</signal>
    <receiver>lcdNumber_94</receiver>
    <slot>display(int)</slot>
@@ -3530,7 +3420,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_110</sender>
+   <sender>instrumentSlider_4</sender>
    <signal>valueChanged(int)</signal>
    <receiver>lcdNumber_95</receiver>
    <slot>display(int)</slot>
@@ -3542,86 +3432,6 @@
     <hint type="destinationlabel">
      <x>356</x>
      <y>526</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>verticalSlider_111</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_96</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>96</x>
-     <y>752</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>98</x>
-     <y>718</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>verticalSlider_112</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_97</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>165</x>
-     <y>762</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>170</x>
-     <y>718</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>verticalSlider_113</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_98</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>225</x>
-     <y>755</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>230</x>
-     <y>715</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>verticalSlider_114</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_99</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>287</x>
-     <y>771</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>287</x>
-     <y>725</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>verticalSlider_115</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_100</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>357</x>
-     <y>761</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>357</x>
-     <y>713</y>
     </hint>
    </hints>
   </connection>

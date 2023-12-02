@@ -7,6 +7,12 @@ from scipy.signal import windows
 import scipy.signal
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
 import matplotlib.pyplot as plt
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
+from PyQt5.QtCore import QUrl
+from scipy.io import wavfile
+from scipy.io import wavfile
+from pydub import AudioSegment
+import sounddevice as sd
 
 
 
@@ -17,9 +23,12 @@ class SignalProcessor:
         self.fft = None
         self.new_fft_result = None
         self.window_type = 'Rectangle'
+        self.sample_rate = None
+        self.player = None
+
 
     def load_signal(self , graph):
-        filepath, _ = QFileDialog.getOpenFileName(self.main_app, "Open File", "", "Data Files (*.dat *.csv)")
+        filepath, _ = QFileDialog.getOpenFileName(self.main_app, "Open File", "", "Data Files (*.dat *.csv);;Sound Files (*.wav)")
         if filepath:
             _, extension = os.path.splitext(filepath)
             if not os.path.exists(filepath):
@@ -32,12 +41,51 @@ class SignalProcessor:
             elif extension == '.csv':
                 data = np.loadtxt(filepath, delimiter=',', skiprows=1)
 
+            elif extension == '.wav':
+                sampling_rate, audio_data = wavfile.read(filepath)
+                audio_data = audio_data[:, 0]
+                audio_data = audio_data.astype(np.float32) / np.iinfo(audio_data.dtype).max
+                time = np.arange(0, len(audio_data)) / sampling_rate
+                data = np.column_stack((time, audio_data))
+                self.player = QMediaPlayer()
+                media_content = QMediaContent(QUrl.fromLocalFile(filepath))
+                self.player.setMedia(media_content)
+                self.sample_rate = sampling_rate
+                if self.player.state() == QMediaPlayer.StoppedState:
+                    self.player.play()
+
             self.signal = data  # Assign the loaded data to self.signal
             self.plot_signal(data ,graph)
             self.get_freq_components(data )
 
     def plot_signal(self, data , graph):
         graph.addItem(pg.PlotDataItem(data))
+
+    def dynamic_plotting(self, data, graph):
+        current_sample = 0
+        graph.clear()
+
+        # Create a plot item in the graph
+        self.curve = graph.plot()
+
+        # Update data
+        self.curve.setData(data[:current_sample])
+        graph.setXRange(max(0, current_sample - 100), current_sample)
+
+        # Set graph limits
+        graph.setLimits(xMin=0, xMax=current_sample + 100, yMin=0, yMax=1.1)
+
+        # Update the current sample
+        current_sample += 1
+
+        if current_sample >= len(data):
+            self.timer.stop()
+
+        # Add a grid
+        graph.showGrid(x=True, y=True)
+
+        # Continue the timer
+        self.timer.start(1000)
 
     def rfft(self, signal, n_samples):
         # Compute the positive-frequency terms with rfft and scale it
@@ -71,13 +119,13 @@ class SignalProcessor:
         # windowed_signal = signal * window
         # return windowed_signal
         if window_type == 'Rectangle':
-            window = scipy.signal.windows.boxcar(range)
+            window = scipy.signal.windows.boxcar(range,slider_value)
         elif window_type == 'Hamming':
-            window = scipy.signal.windows.hamming(range)
+            window = scipy.signal.windows.hamming(range,slider_value)
         elif window_type == 'Hanning':
-            window = scipy.signal.windows.hann(range)
+            window = scipy.signal.windows.hann(range,slider_value)
         elif window_type == 'Gaussian':
-            window = scipy.signal.windows.gaussian(range, std=0.1)
+            window = scipy.signal.windows.gaussian(range,slider_value)
 
         windowed_signal = window * slider_value
 
@@ -183,72 +231,26 @@ class SignalProcessor:
         freqGraph.setLabel('left', 'Magnitude')
         freqGraph.setLabel('bottom', 'Frequency')
 
-    def clear_modes234(self):
-        # mode 2 graphs
-        self.main_app.graphicsView_56.clear()
-        self.main_app.graphicsView_58.clear()
-        self.main_app.graphicsView_60.clear()
-        self.main_app.graphicsView_4.clear()
-        # mode 3 graphs
-        self.main_app.graphicsView_21.clear()
-        self.main_app.graphicsView_23.clear()
-        self.main_app.graphicsView_6.clear()
-        # mode 4 graphs
-        self.main_app.graphicsView_26.clear()
-        self.main_app.graphicsView_28.clear()
-        self.main_app.graphicsView_30.clear()
-        self.main_app.graphicsView_7.clear()
+    def clear_modes(self, modes,clear_spectrogram=True):
+        # Define all the graph views for each mode
+        graph_views = {
+            1: ['graphicsView', 'graphicsView_2', 'graphicsView_3', 'graphicsView_5'],
+            2: ['graphicsView_56', 'graphicsView_58', 'graphicsView_60', 'graphicsView_4'],
+            3: ['graphicsView_21', 'graphicsView_23', 'graphicsView_25', 'graphicsView_6'],
+            4: ['graphicsView_26', 'graphicsView_28', 'graphicsView_30', 'graphicsView_7'],
+        }
 
-    def clear_modes134(self):
-        # mode 1 graphs
-        self.main_app.graphicsView.clear()
-        self.main_app.graphicsView_2.clear()
-        self.main_app.graphicsView_3.clear()
-        self.main_app.graphicsView_5.clear()
-        # mode 3 graphs
-        self.main_app.graphicsView_21.clear()
-        self.main_app.graphicsView_23.clear()
-        self.main_app.graphicsView_25.clear()
-        self.main_app.graphicsView_6.clear()
-        # mode 4 graphs
-        self.main_app.graphicsView_26.clear()
-        self.main_app.graphicsView_28.clear()
-        self.main_app.graphicsView_30.clear()
-        self.main_app.graphicsView_7.clear()
+        # Iterate over the modes and clear the corresponding graph views
+        for mode in modes:
+            for view in graph_views[mode]:
+                getattr(self.main_app, view).clear()
 
-    def clear_modes124(self):
-        # mode 1 graphs
-        self.main_app.graphicsView.clear()
-        self.main_app.graphicsView_2.clear()
-        self.main_app.graphicsView_3.clear()
-        self.main_app.graphicsView_5.clear()
-        # mode 2 graphs
-        self.main_app.graphicsView_56.clear()
-        self.main_app.graphicsView_58.clear()
-        self.main_app.graphicsView_60.clear()
-        self.main_app.graphicsView_4.clear()
-        # mode 4 graphs
-        self.main_app.graphicsView_26.clear()
-        self.main_app.graphicsView_28.clear()
-        self.main_app.graphicsView_30.clear()
-        self.main_app.graphicsView_7.clear()
-
-    def clear_modes123(self):
-        # mode 1 graphs
-        self.main_app.graphicsView.clear()
-        self.main_app.graphicsView_2.clear()
-        self.main_app.graphicsView_3.clear()
-        self.main_app.graphicsView_5.clear()
-        # mode 2 graphs
-        self.main_app.graphicsView_56.clear()
-        self.main_app.graphicsView_58.clear()
-        self.main_app.graphicsView_60.clear()
-        self.main_app.graphicsView_4.clear()
-        # mode 3 graphs
-        self.main_app.graphicsView_21.clear()
-        self.main_app.graphicsView_23.clear()
-        self.main_app.graphicsView_25.clear()
-        self.main_app.graphicsView_6.clear()
+        # If clear_spectrogram is True, clear the spectrogram
+        if clear_spectrogram:
+            if hasattr(self, 'spectrogram_plotter'):
+                self.spectrogram_plotter.clear_spectrogram()
+            if hasattr(self, 'spectrogram_plotter_2'):
+                self.spectrogram_plotter_2.clear_spectrogram()
 
 
     def on_window_type_changed2(self, index , comboBox):
@@ -321,6 +323,84 @@ class SignalProcessor:
     def fitScreen(self, graph):
         graph.getViewBox().autoRange()
 
+    def get_freq_components_sound(self, signal):
+        # get time and Amplitude
+        time = signal[:, 0]
+        Amplitude = signal[:, 1]
+        sampling_rate = self.sample_rate
+        n_samples = len(Amplitude)
+
+        # Compute the Fast Fourier Transform (FFT)
+        self.fft = self.rfft(Amplitude, n_samples)
+        # self.window_type = windowType
+
+        # Compute the frequencies associated with the FFT
+        freqs = self.get_freq(n_samples, 1.0 / sampling_rate)
+
+        # Find the corresponding magnitudes of the positive frequencies
+        magnitude, phases = self.get_mag_and_phase(self.fft)
+
+        # Create 10 equal frequency ranges
+        # instrument_freq_ranges = [(0, 500), (500, 1000), (1000, 2000), (2000, 20000)]
+        freq_ranges = []
+
+        freq_ranges.append((0, 500))
+        freq_ranges.append((500, 1000))
+        freq_ranges.append((1000, 2000))
+        freq_ranges.append((2000, 20000))
+
+        return freq_ranges, magnitude, phases, freqs, time
+    def apply_equalizer_sound(self, freq_ranges, magnitude, phases, freqs, time,freqGraph, outputTimeGraph):
+        # Loop over each slider
+        for i in range(4):
+            # Get the value of the current slider
+            slider_value = getattr(self.main_app, f'instrumentSlider_{i+1}').value()
+
+            # Find the indices of the FFT coefficients corresponding to this frequency range
+            # idx = np.where((freqs >= freq_ranges[i][0]) & (freqs < freq_ranges[i][1]))
+            freq_range_lower, freq_range_upper = freq_ranges[i]
+
+            # Convert the tuple into a NumPy array for comparison
+            freq_range_array = np.array([freq_range_lower, freq_range_upper])
+
+            # Find the indices of the FFT coefficients corresponding to this frequency range
+            idx = np.where((freqs >= freq_range_array[0]) & (freqs < freq_range_array[1]))
+
+
+
+            window = self.apply_windowing(len(idx[0]), slider_value , self.window_type)
+
+            # Apply the gain to these coefficients
+            # new_magnitude = self.change_magnitude(magnitude[idx], slider_value)
+            new_magnitude = self.change_magnitude(magnitude[idx], window)
+
+            # Update the magnitude
+            magnitude[idx] = new_magnitude
+
+        # Create a new fft result with modified magnitudes and original phases
+        self.new_fft_result = self.create_equalized_signal(magnitude, phases)
+        equalized_sig = self.inverse(self.new_fft_result, len(self.fft))
+        # self.main_app.graphicsView_2.clear()
+        # self.main_app.graphicsView_2.addItem(pg.PlotDataItem(time, equalized_sig))
+        outputTimeGraph.clear()
+        outputTimeGraph.addItem(pg.PlotDataItem(time, equalized_sig))
+        self.plot_equalized_fft(equalized_sig, 1.0 / self.sample_rate,freqGraph)
+        self.playProcessedSound(equalized_sig)
+
+    def playProcessedSound(self,processedData):
+        # Save the processed audio data as a temporary WAV file
+        # temp_wav_file = 'temp_processed_audio.wav'
+        # self.audio_path = 'temp_processed_audio.wav'
+        # write(temp_wav_file, self.sample_rate, processedData)
+        # self.media_player = QMediaPlayer()
+        # Set the media content to the temporary WAV file
+        # self.media_player.setMedia(QMediaContent(QUrl.fromLocalFile(temp_wav_file)))
+        # Play the media
+        # self.media_player.play()
+        # self.audio = AudioSegment.from_wav(self.audio_path)
+        # self.audio.play()
+        sd.play(processedData,self.sample_rate)
+
 
 
 
@@ -347,6 +427,11 @@ class SpectrogramPlotter:
 
         # Add the Spectrogram canvas to the passed layout
         self.layout.addWidget(self.Spectrogram)
+    def clear_spectrogram(self):
+        """Clear the current spectrogram."""
+        self.layout.removeWidget(self.Spectrogram)
+        self.Spectrogram.deleteLater()
+        self.Spectrogram = None
 
     def plot_spectro(self, signal, sampling_rate, cmap='jet', shading='auto'):
         """

@@ -8,6 +8,8 @@ from scipy import signal
 import pyqtgraph as pg
 import os
 import scipy.signal
+from PyQt5.QtCore import QTimer
+
 
 # import UI file
 FORM_CLASS, _ = loadUiType("Equalizerr_2.ui")  # replace "Equalizerr_2.ui" with the path to your UI file
@@ -17,26 +19,11 @@ class MainApp(QMainWindow, FORM_CLASS):
         super(MainApp, self).__init__(parent)
         self.setupUi(self)
         self.Handle_Buttons()
-
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_plot)
 
     def Handle_Buttons(self):
-        # self.pushButton.clicked.connect(self.load_and_plot)
         self.pushButton_2.clicked.connect(self.load_signal_2)
-
-    # def load_signal(self):
-    #     # create a simple sine wave as an example signal
-    #     fs = 10e3
-    #     N = 1e5
-    #     amp = 2 * np.sqrt(2)
-    #     freq = 1234.0
-    #     noise_power = 0.01 * fs / 2
-    #     time = np.arange(N) / fs
-    #     self.SignalArray = amp*np.sin(2*np.pi*freq*time)
-    #
-    # def load_and_plot(self):
-    #     self.load_signal_2()
-    #     self.CreateWindowFigure()
-    #     self.apply_windowing(100)
 
     def load_signal_2(self):
         filepath, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Data Files (*.dat *.csv)")
@@ -47,31 +34,31 @@ class MainApp(QMainWindow, FORM_CLASS):
                 return
             data = None
             if extension == '.dat':
-                # Read the .dat file as 16-bit integers
                 data = np.fromfile(filepath, dtype=np.int16)
             elif extension == '.csv':
                 data = np.loadtxt(filepath, delimiter=',', skiprows=1)
 
+            print(f"Loaded data: {data}")  # Print the loaded data to check if it's loaded correctly
             self.signal_2 = data  # Assign the loaded data to main_app.signal
-            window=signal.windows.hann(len(self.signal_2))
-            window_2=window*0
+            self.current_sample = 0  # Reset the current sample
+            self.dynamic_plotting(self.signal_2, self.graphicsView)  # Plot initially
+            self.timer.start(1000)  # Start the timer
 
+    def dynamic_plotting(self, data, graph):
+        print(
+            f"Current sample: {self.current_sample}")  # Print the current sample to check if it's being updated correctly
+        graph.clear()
+        curve = graph.plot()
+        curve.setData(data[:self.current_sample])
+        graph.setXRange(max(0, self.current_sample - 100), self.current_sample)
+        graph.setLimits(xMin=0, xMax=self.current_sample + 100, yMin=0, yMax=1.1)
+        self.current_sample += 1
+        if self.current_sample >= len(data):
+            self.timer.stop()
+        graph.showGrid(x=True, y=True)
 
-            self.graphicsView.addItem(pg.PlotDataItem(window_2))
-
-
-
-    # def apply_windowing(self, window_size):
-    #     window = scipy.signal.windows.boxcar(window_size)
-    #     self.axes_window.plot(window)
-    #     self.Window.draw()
-    #
-    # def CreateWindowFigure(self):
-    #     self.figure = plt.figure()
-    #     self.figure.patch.set_facecolor('black')
-    #     self.axes_window = self.figure.add_subplot()
-    #     self.Window = Canvas(self.figure)
-    #     self.verticalLayout.addWidget(self.Window)
+    def update_plot(self):
+        self.dynamic_plotting(self.signal_2, self.graphicsView)
 
 
 def main():
