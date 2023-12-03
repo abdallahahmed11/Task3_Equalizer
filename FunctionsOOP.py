@@ -86,7 +86,6 @@ class SignalProcessor:
 
 
 
-
     def get_freq_components(self, signal):
         # get time and Amplitude
         time = signal[:, 0]
@@ -100,6 +99,9 @@ class SignalProcessor:
 
         # Compute the frequencies associated with the FFT
         freqs = self.get_freq(n_samples, 1.0 / sampling_rate)
+        # print("frequencyyyyyyyyyy")
+        # print(freqs)
+        # print(len(freqs))
 
         # Find the corresponding magnitudes of the positive frequencies
         magnitude, phases = self.get_mag_and_phase(self.fft)
@@ -141,28 +143,83 @@ class SignalProcessor:
         outputTimeGraph.addItem(pg.PlotDataItem(time, equalized_sig))
         self.plot_equalized_fft(equalized_sig, 1.0 / (time[1] - time[0]) ,freqGraph)
 
-    # def on_window_type_changed(self, index):
-    #     if index == 0:
-    #         self.window_type = 'Rectangle'
-    #         self.main_app.graphicsView_5.clear()
-    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-    #     elif index == 1:
-    #         self.window_type = 'Hamming'
-    #         self.main_app.graphicsView_5.clear()
-    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-    #         print(1)
-    #     elif index == 2:
-    #         self.window_type = 'Hanning'
-    #         self.main_app.graphicsView_5.clear()
-    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-    #         print(2)
-    #     elif index == 3:
-    #         self.window_type = 'Gaussian'
-    #         self.main_app.graphicsView_5.clear()
-    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, self.window_type)))
-    #         print(3)
-    #     else:
-    #         self.window_type = 'Rectangle'
+
+    def apply_equalizer_ecgMode(self, magnitude, phases, freqs, time, freqGraph, outputTimeGraph):
+        # Frequency ranges for each slider
+        # freq_ranges = [(0, 60), (90, 250), (300, 600)]
+        freq_ranges = [(60,90), (0,60), (90, 250), (300, 600)]
+        # freq_ranges = [[60,90], [0,60], [90, 250], [300, 600]]
+
+        # Assuming you have sliders in your Streamlit app with specific names
+        slider_names = ["verticalSlider_46", "verticalSlider_47", "verticalSlider_48" , "verticalSlider_49"]
+
+        for slider_name, freq_range in zip(slider_names, freq_ranges):
+            # Get the value of the current slider
+            slider_value = getattr(self.main_app, slider_name).value()
+
+            # Find the indices of the FFT coefficients corresponding to this frequency range
+            idx = np.where((freqs >= freq_range[0]) & (freqs < freq_range[1]))
+            # print("sliderrrrr")
+            # # print(slider_name, slider_value ,idx)
+            # print(slider_name, slider_value ,len(magnitude[idx]))
+
+            window = self.apply_windowing(len(idx[0]), slider_value, self.window_type)
+
+            # Apply the gain to these coefficients
+            new_magnitude = self.change_magnitude(magnitude[idx], window)
+
+            # Update the magnitude
+            magnitude[idx] = new_magnitude
+
+        # Create a new fft result with modified magnitudes and original phases
+        self.new_fft_result = self.create_equalized_signal(magnitude, phases)
+        equalized_sig = self.inverse(self.new_fft_result, len(self.fft))
+
+        # Assuming you have a function similar to plotspectrogram for the time domain, modify if needed
+        outputTimeGraph.clear()
+        outputTimeGraph.addItem(pg.PlotDataItem(time, equalized_sig))
+
+        # Assuming you have a function similar to plot for the frequency domain, modify if needed
+        self.plot_equalized_fft(equalized_sig, 1.0 / (time[1] - time[0]), freqGraph)
+
+    def apply_equalizer_animalsMode(self, magnitude, phases, freqs, time, freqGraph, outputTimeGraph):
+        # Frequency ranges for each slider
+        freq_ranges = [(0,2000), (2000,7000)]
+        # animal_label = ['Lion', 'Eagle']
+
+        # Assuming you have sliders in your Streamlit app with specific names
+        slider_names = ["verticalSlider_36", "verticalSlider_37"]
+
+        for slider_name, freq_range in zip(slider_names, freq_ranges):
+            # Get the value of the current slider
+            slider_value = getattr(self.main_app, slider_name).value()
+
+            # Find the indices of the FFT coefficients corresponding to this frequency range
+            idx = np.where((freqs >= freq_range[0]) & (freqs < freq_range[1]))
+            # print("sliderrrrr")
+            # # print(slider_name, slider_value ,idx)
+            # print(slider_name, slider_value ,len(magnitude[idx]))
+
+            window = self.apply_windowing(len(idx[0]), slider_value, self.window_type)
+
+            # Apply the gain to these coefficients
+            new_magnitude = self.change_magnitude(magnitude[idx], window)
+
+            # Update the magnitude
+            magnitude[idx] = new_magnitude
+
+        # Create a new fft result with modified magnitudes and original phases
+        self.new_fft_result = self.create_equalized_signal(magnitude, phases)
+        equalized_sig = self.inverse(self.new_fft_result, len(self.fft))
+
+        # Assuming you have a function similar to plotspectrogram for the time domain, modify if needed
+        outputTimeGraph.clear()
+        outputTimeGraph.addItem(pg.PlotDataItem(time, equalized_sig))
+
+        # Assuming you have a function similar to plot for the frequency domain, modify if needed
+        self.plot_equalized_fft(equalized_sig, 1.0 / (time[1] - time[0]), freqGraph)
+
+
 
     def plot_equalized_fft(self, equalized_sig, sampling_rate , freqGraph):
         n_samples = len(equalized_sig)
@@ -288,25 +345,80 @@ class SignalProcessor:
         else:
             self.window_type = selected_window_type
 
+    def on_window_type_changed3(self, index , comboBox ,sliderValue):
+        # Determine the active tab
+        active_tab_index = self.main_app.tabWidget.currentIndex()
 
-    def default_graph_drawing(self):
+        # Get the selected window type from the ComboBox
+        # window_type_index = self.main_app.comboBox_mode1.currentIndex()
+        window_type_index = comboBox.currentIndex()
+        window_types = ['Rectangle', 'Hamming', 'Hanning', 'Gaussian']
+
+        if window_type_index < len(window_types):
+            selected_window_type = window_types[window_type_index]
+        else:
+            selected_window_type = 'Rectangle'  # Default to Rectangle if ComboBox index is out of range
+
+        if active_tab_index == 0:
+            # First tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_5.clear()
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, self.window_type)))
+        elif active_tab_index == 1:
+            # Second tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_4.clear()
+            self.main_app.graphicsView_4.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, self.window_type)))
+        elif active_tab_index == 2:
+            # Third tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_6.clear()
+            self.main_app.graphicsView_6.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, self.window_type)))
+        elif active_tab_index == 3:
+            # Fourth tab is active
+            self.window_type = selected_window_type
+            self.main_app.graphicsView_7.clear()
+            self.main_app.graphicsView_7.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, self.window_type)))
+        else:
+            self.window_type = selected_window_type
+
+
+    # def default_graph_drawing(self):
+    #     active_tab_index = self.main_app.tabWidget.currentIndex()
+    #     if active_tab_index == 0:
+    #         # First tab is active
+    #         self.main_app.graphicsView_5.clear()
+    #         self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1,'Rectangle')))
+    #     elif active_tab_index == 1:
+    #         # Second tab is active
+    #         self.main_app.graphicsView_4.clear()
+    #         self.main_app.graphicsView_4.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+    #     elif active_tab_index == 2:
+    #         # Third tab is active
+    #         self.main_app.graphicsView_6.clear()
+    #         self.main_app.graphicsView_6.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+    #     elif active_tab_index == 3:
+    #         # Fourth tab is active
+    #         self.main_app.graphicsView_7.clear()
+    #         self.main_app.graphicsView_7.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+    def default_graph_drawing(self, sliderValue):
         active_tab_index = self.main_app.tabWidget.currentIndex()
         if active_tab_index == 0:
             # First tab is active
             self.main_app.graphicsView_5.clear()
-            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(100, 1,'Rectangle')))
+            self.main_app.graphicsView_5.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, 'Rectangle')))
         elif active_tab_index == 1:
             # Second tab is active
             self.main_app.graphicsView_4.clear()
-            self.main_app.graphicsView_4.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+            self.main_app.graphicsView_4.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, 'Rectangle')))
         elif active_tab_index == 2:
             # Third tab is active
             self.main_app.graphicsView_6.clear()
-            self.main_app.graphicsView_6.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+            self.main_app.graphicsView_6.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, 'Rectangle')))
         elif active_tab_index == 3:
             # Fourth tab is active
             self.main_app.graphicsView_7.clear()
-            self.main_app.graphicsView_7.addItem(pg.PlotDataItem(self.apply_windowing(100, 1, 'Rectangle')))
+            self.main_app.graphicsView_7.addItem(pg.PlotDataItem(self.apply_windowing(sliderValue, 1, 'Rectangle')))
 
     def zoomOut(self, graph):
         # You can adjust the zoom factor as needed

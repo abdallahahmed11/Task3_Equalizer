@@ -28,11 +28,9 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.Handle_Buttons()
         self.intializer()
 
-
-
     def intializer(self):
         self.tabWidget.setCurrentIndex(0)
-        self.window_type='Rectangle'
+        self.window_type = 'Rectangle'
         self.verticalSlider_1.setRange(0, 10)
         self.verticalSlider_2.setRange(0, 10)
         self.verticalSlider_3.setRange(0, 10)
@@ -43,6 +41,12 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.verticalSlider_8.setRange(0, 10)
         self.verticalSlider_9.setRange(0, 10)
         self.verticalSlider_10.setRange(0, 10)
+
+        self.windowSlider1.setRange(100, 1000)
+        self.windowSlider2.setRange(100, 1000)
+        self.windowSlider3.setRange(100, 1000)
+        self.windowSlider4.setRange(100, 1000)
+
         self.verticalSlider_1.setValue(1)
         self.verticalSlider_2.setValue(1)
         self.verticalSlider_3.setValue(1)
@@ -55,39 +59,50 @@ class MainApp(QMainWindow, FORM_CLASS):
 
         # Create an instance of SpectrogramPlotter
         self.spectrogram_plotter = SpectrogramPlotter(self.verticalLayout_16)
-        self.spectrogram_plotter_2= SpectrogramPlotter(self.verticalLayout_17)
-
-
+        self.spectrogram_plotter_2 = SpectrogramPlotter(self.verticalLayout_17)
 
     def Handle_Buttons(self):
         self.tabWidget.currentChanged.connect(self.tab_changed_handler)
 
-
-    def apply_equalizer_handler(self, freqGraph , outputTimeGraph):
-        freq_ranges, magnitude, phases, freqs, time  = self.signal_processor.get_freq_components(self.signal_processor.signal )
+    def apply_equalizer_handler(self, freqGraph, outputTimeGraph):
+        freq_ranges, magnitude, phases, freqs, time = self.signal_processor.get_freq_components(
+            self.signal_processor.signal)
         self.spectrogram_plotter.plot_spectro(magnitude, 1)
-        self.signal_processor.apply_equalizer_uniform(freq_ranges, magnitude, phases, freqs, time ,freqGraph, outputTimeGraph)
+        self.signal_processor.apply_equalizer_uniform(freq_ranges, magnitude, phases, freqs, time, freqGraph,
+                                                      outputTimeGraph)
         self.spectrogram_plotter_2.plot_spectro(magnitude, 1)
 
-
+    def apply_equalizer_ecg_handler(self, freqGraph, outputTimeGraph):
+        freq_ranges, magnitude, phases, freqs, time = self.signal_processor.get_freq_components(
+            self.signal_processor.signal)
+        self.spectrogram_plotter.plot_spectro(magnitude, 1)
+        self.signal_processor.apply_equalizer_ecgMode(magnitude, phases, freqs, time, freqGraph,
+                                                      outputTimeGraph)
+        self.spectrogram_plotter_2.plot_spectro(magnitude, 1)
 
     def tab_changed_handler(self, index):
         if index == 0:
             print("First tab clicked")
             # self.pushButton.clicked.connect(self.signal_processor.load_signal)
             self.pushButton.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView))
-            self.pushButton.clicked.connect(self.signal_processor.default_graph_drawing)
+            # self.pushButton.clicked.connect(self.signal_processor.default_graph_drawing)
+            self.pushButton.clicked.connect(
+                lambda: self.signal_processor.default_graph_drawing(sliderValue=self.windowSlider1.value()))
             # self.pushButton_2.clicked.connect(self.apply_equalizer_handler)
-            self.pushButton_2.clicked.connect(lambda:self.apply_equalizer_handler(freqGraph=self.graphicsView_3 , outputTimeGraph=self.graphicsView_2))
+            self.pushButton_2.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_3,
+                                                                                   outputTimeGraph=self.graphicsView_2))
             self.signal_processor.clear_modes234()
+            # self.comboBox_mode1.currentIndexChanged.connect(
+            #     lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode1))
             self.comboBox_mode1.currentIndexChanged.connect(
-                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode1))
+                lambda: self.signal_processor.on_window_type_changed3(index=0, comboBox=self.comboBox_mode1,
+                                                                      sliderValue=self.windowSlider1.value()))
 
             self.graphicsView.setXLink(self.graphicsView_2)
             self.graphicsView.setYLink(self.graphicsView_2)
-            self.pushButton_4.clicked.connect(lambda :self.signal_processor.zoomIn(graph=self.graphicsView))
-            self.pushButton_5.clicked.connect(lambda :self.signal_processor.zoomOut(graph=self.graphicsView))
-            self.pushButton_6.clicked.connect(lambda :self.signal_processor.fitScreen(graph=self.graphicsView))
+            self.pushButton_4.clicked.connect(lambda: self.signal_processor.zoomIn(graph=self.graphicsView))
+            self.pushButton_5.clicked.connect(lambda: self.signal_processor.zoomOut(graph=self.graphicsView))
+            self.pushButton_6.clicked.connect(lambda: self.signal_processor.fitScreen(graph=self.graphicsView))
 
 
 
@@ -96,12 +111,18 @@ class MainApp(QMainWindow, FORM_CLASS):
             print("Second tab clicked")
             # self.pushButton_57.clicked.connect(self.signal_processor.load_signal)
             self.pushButton_57.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView_56))
-            self.pushButton_57.clicked.connect(self.signal_processor.default_graph_drawing)
+            # self.pushButton_57.clicked.connect(self.signal_processor.default_graph_drawing)
+            self.pushButton_57.clicked.connect(
+                lambda: self.signal_processor.default_graph_drawing(sliderValue=self.windowSlider2.value()))
 
-            self.pushButton_7.clicked.connect(lambda:self.apply_equalizer_handler(freqGraph=self.graphicsView_60, outputTimeGraph= self.graphicsView_58))
+            self.pushButton_7.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_60,
+                                                                                   outputTimeGraph=self.graphicsView_58))
             self.signal_processor.clear_modes134()
+            # self.comboBox_mode2.currentIndexChanged.connect(
+            #     lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode2))
             self.comboBox_mode2.currentIndexChanged.connect(
-                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode2))
+                lambda: self.signal_processor.on_window_type_changed3(index=0, comboBox=self.comboBox_mode2,
+                                                                      sliderValue=self.windowSlider2.value()))
             self.graphicsView_56.setXLink(self.graphicsView_58)
             self.graphicsView_56.setYLink(self.graphicsView_58)
             self.pushButton_54.clicked.connect(lambda: self.signal_processor.zoomIn(graph=self.graphicsView_56))
@@ -114,12 +135,18 @@ class MainApp(QMainWindow, FORM_CLASS):
             print("Third tab clicked")
             # self.pushButton_22.clicked.connect(self.signal_processor.load_signal)
             self.pushButton_22.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView_21))
-            self.pushButton_22.clicked.connect(self.signal_processor.default_graph_drawing)
+            # self.pushButton_22.clicked.connect(self.signal_processor.default_graph_drawing)
+            self.pushButton_22.clicked.connect(
+                lambda: self.signal_processor.default_graph_drawing(sliderValue=self.windowSlider3.value()))
 
-            self.pushButton_8.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_25 ,outputTimeGraph=self.graphicsView_23))
+            self.pushButton_8.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_25,
+                                                                                   outputTimeGraph=self.graphicsView_23))
             self.signal_processor.clear_modes124()
+            # self.comboBox_mode3.currentIndexChanged.connect(
+            #     lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode3))
             self.comboBox_mode3.currentIndexChanged.connect(
-                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode3))
+                lambda: self.signal_processor.on_window_type_changed3(index=0, comboBox=self.comboBox_mode3,
+                                                                      sliderValue=self.windowSlider3.value()))
             self.graphicsView_21.setXLink(self.graphicsView_23)
             self.graphicsView_21.setYLink(self.graphicsView_23)
             self.pushButton_19.clicked.connect(lambda: self.signal_processor.zoomIn(graph=self.graphicsView_21))
@@ -131,19 +158,24 @@ class MainApp(QMainWindow, FORM_CLASS):
             print("Fourth tab clicked")
             # self.pushButton_27.clicked.connect(self.signal_processor.load_signal)
             self.pushButton_27.clicked.connect(lambda: self.signal_processor.load_signal(graph=self.graphicsView_26))
-            self.pushButton_27.clicked.connect(self.signal_processor.default_graph_drawing)
+            # self.pushButton_27.clicked.connect(self.signal_processor.default_graph_drawing)
+            self.pushButton_27.clicked.connect(
+                lambda: self.signal_processor.default_graph_drawing(sliderValue=self.windowSlider4.value()))
 
-            self.pushButton_9.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_30 ,outputTimeGraph= self.graphicsView_28))
+            # self.pushButton_9.clicked.connect(lambda: self.apply_equalizer_handler(freqGraph=self.graphicsView_30 ,outputTimeGraph= self.graphicsView_28))
+            self.pushButton_9.clicked.connect(lambda: self.apply_equalizer_ecg_handler(freqGraph=self.graphicsView_30,
+                                                                                       outputTimeGraph=self.graphicsView_28))
             self.signal_processor.clear_modes123()
+            # self.comboBox_mode4.currentIndexChanged.connect(
+            #     lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode4))
             self.comboBox_mode4.currentIndexChanged.connect(
-                lambda: self.signal_processor.on_window_type_changed2(index=0, comboBox=self.comboBox_mode4))
-            self.graphicsView_26.setXLink(self.graphicsView_28)
-            self.graphicsView_26.setYLink(self.graphicsView_28)
+                lambda: self.signal_processor.on_window_type_changed3(index=0, comboBox=self.comboBox_mode4,
+                                                                      sliderValue=self.windowSlider4.value()))
+            # self.graphicsView_26.setXLink(self.graphicsView_28)
+            # self.graphicsView_26.setYLink(self.graphicsView_28)
             self.pushButton_24.clicked.connect(lambda: self.signal_processor.zoomIn(graph=self.graphicsView_26))
             self.pushButton_25.clicked.connect(lambda: self.signal_processor.zoomOut(graph=self.graphicsView_26))
             self.pushButton_26.clicked.connect(lambda: self.signal_processor.fitScreen(graph=self.graphicsView_26))
-
-
 
 
 def main():
